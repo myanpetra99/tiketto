@@ -19,7 +19,9 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"]
-    }
+    },
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
+    "types": ["googlemaps"]
   },
   "include": [
     ".eslintrc.cjs",

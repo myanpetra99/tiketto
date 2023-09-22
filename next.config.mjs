@@ -17,6 +17,9 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  images: {
+    domains: ['media.graphassets.com','awsimages.detik.net.id'],
+  },
 };
 
 export default config;

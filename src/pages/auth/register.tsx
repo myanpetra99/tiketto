@@ -76,7 +76,7 @@ export default function Login() {
                 ></input>
                 <button
                   id="reveal"
-                  className="text-indigo absolute p-3 text-white bg-black opacity-20"
+                  className="text-indigo absolute p-3 text-white bg-slate-500 opacity-20 hover:bg-slate-800"
                   onClick={revealPass}
                 >
                   Reveal

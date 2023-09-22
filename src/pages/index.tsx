@@ -11,8 +11,8 @@ export default function Home() {
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-          <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-            Looking for  <span className="text-[hsl(280,100%,70%)]">Ticketing War</span> Platform
+          <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-[4rem]">
+            Looking for  <span className="text-[hsl(280,100%,70%)]">Ticketing War</span> Platform?
           </h1>
           <div className="flex w-screen items-center justify-center">
     <div className="w-1/2 flex items-center justify-end">
@@ -34,7 +34,7 @@ export default function Home() {
             </Link>
             <Link
               className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-              href="https://create.t3.gg/en/introduction"
+              href="/register"
               target="_blank"
             >
               <h3 className="text-2xl font-bold">As Seller →</h3>
