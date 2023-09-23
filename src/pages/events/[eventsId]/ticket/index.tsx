@@ -18,8 +18,8 @@ export default function Events() {
               "https://awsimages.detik.net.id/community/media/visual/2023/05/11/harga-tiket-konser-coldplay-jakarta-2023.jpeg?w=1080"
             }
             alt="1"
-            width={200}
-            height={200}
+            width={750}
+            height={750}
             style={{ width: "90vw", height: "100%" }}
           />
           <h1 className="text-2xl font-extrabold tracking-tight text-white sm:text-[3rem]">
