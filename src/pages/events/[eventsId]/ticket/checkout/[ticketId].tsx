@@ -14,6 +14,7 @@ export default function Checkout() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
+
   const increment = () => {
     setQty((prevQty) => prevQty + 1);
   };
@@ -21,6 +22,7 @@ export default function Checkout() {
   const decrement = () => {
     setQty((prevQty) => prevQty - 1);
   };
+
 
   const toggleDatepicker = () => {
     setShowPicker(!showPicker);
@@ -92,6 +94,73 @@ export default function Checkout() {
   useEffect(() => {
     FormatDateToYYYMMDD(date);
   }, [date]);
+
+  const handleQtyChange = (e:any) => {
+    const newQty = parseInt(e.target.value) || 1; // Ensure qty is a positive integer
+    /*setQty(parseInt(e.target.value) || 1); // Ensure qty is a positive integer*/
+    setQty(newQty);
+  };
+
+  const renderForms = () => {
+    const forms = [];
+    for (let i = 0; i < qty; i++) {
+      forms.push(
+        <div
+          key={i}
+          className="flex w-full flex-col gap-4 p-4 text-white"
+          style={{ marginBottom: "20px" }} // Add margin to separate forms
+          >
+          <h3 className="text-xl font-bold text-white">Gender</h3>
+
+          <div className="grid grid-cols-3">
+          <div className="flex">
+            <input name="chsex" id={`male${i}`} value="Male" type="radio" />
+            <label htmlFor={`male${i}`}>Male</label>
+          </div>
+          <div className="flex">
+            <input name="chsex" id={`female${i}`} value="Female" type="radio" />
+            <label htmlFor={`female${i}`}>Female</label>
+          </div>
+        </div>
+
+        <div className="relative flex items-center">
+          <div className="flex-grow border-t border-gray-400"></div>
+        </div>
+
+        <h3 className="text-xl font-bold text-white">Full Name</h3>
+        <input
+          className="text-black w-full rounded-md p-2 border-2 hover:border-blue-200 focus:border-blue-400"
+        />
+
+        <div className="relative flex items-center">
+          <div className="flex-grow border-t border-gray-400"></div>
+        </div>
+
+        <h3 className="text-xl font-bold text-white">Email</h3>
+        <input
+          id={`email${i}`}
+          type="email"
+          className="text-black w-full rounded-md p-2 border-2 hover:border-blue-200 focus:border-blue-400"
+        />
+        
+        <div className="relative flex items-center">
+          <div className="flex-grow border-t border-gray-400"></div>
+        </div>
+
+        <h3 className="text-xl font-bold text-white">Mobile Phone</h3>
+        <div className="w-full flex items-center justify-end">
+          <input
+            id={`tel${i}`}
+            type="tel"
+            className="text-black w-full rounded-md p-2 border-2 hover:border-blue-200 focus:border-blue-400"
+          />
+        </div>
+        </div>
+      );
+    }
+    return forms;
+  };
+
   return (
     <>
       <Head>
@@ -106,12 +175,15 @@ export default function Checkout() {
           </h1>
           <h2 className="text-white sm:text-[1em]">..Almost there</h2>
         </div>
+
+        <div className="mt-8 grid md:w-1/2 sm:w-full items-center justify-items-center rounded-xl bg-white/10 p-5">
+
         <div className="flex w-full flex-col items-center justify-center justify-items-center px-5">
-          <h3 className="text-lg font-extrabold tracking-tight text-white ">
+          <h3 className="mb-4 text-3xl font-extrabold tracking-tight text-white ">
             Date
           </h3>
           <div
-            className="datepicker-container border-1 flex w-1/2 rounded-md bg-gray-200  p-1"
+            className="mb-10 datepicker-container border-1 flex w-1/2 rounded-md bg-gray-200  p-1"
             onClick={toggleDatepicker}
           >
             <div className="datepicker-input flex w-full flex-col bg-white p-2">
@@ -199,9 +271,10 @@ export default function Checkout() {
             </div>
           </div>
         </div>
+
         <div className="flex w-1/2 items-center justify-center justify-items-center flex-col sm:flex-row">
-          <div className="mt-5 flex w-full flex-col items-center justify-center justify-items-center text-lg text-black">
-            <h3 className="mb-3 text-lg font-extrabold tracking-tight text-white">
+          <div className="mt-3 flex w-full flex-col items-center justify-center justify-items-center text-lg text-black">
+            <h3 className="mb-5 text-3xl font-extrabold tracking-tight text-white">
               Ticket Type
             </h3>
             <Link href="/home/events/live/1">
@@ -218,39 +291,56 @@ export default function Checkout() {
               </button>
             </Link>
           </div>
-          <div className="mt-5 flex w-full flex-col items-center justify-center justify-items-center text-lg text-black">
-            <h3 className="text-lg font-extrabold tracking-tight text-white ">
+          <div className="mt-5  flex w-full flex-col items-center justify-center justify-items-center text-lg text-black">
+            <h3 className=" text-3xl font-extrabold tracking-tight text-white ">
               Quantity
             </h3>
-            <div className="flex w-full sm:w-1/2 items-center justify-center">
+
+            <div className="mt-4 flex w-full sm:w-1/2 items-center justify-center ">
               <button
                 className={`h-7 w-7 rounded-full border-2 border-blue-500 bg-white text-blue-500 ${
                   qty && qty === 1
                     ? "disabled cursor-not-allowed bg-gray-300"
                     : ""
                 } hover:bg-blue-500 hover:text-white`}
-                onClick={decrement}
-              >
-                -
+                onClick={decrement}>
+                
+                  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="50" height="50" viewBox="0 0 265 265">
+                    <path fill="#fff" d="M64 9A55 55 0 1 0 64 119A55 55 0 1 0 64 9Z" transform="rotate(-45.001 64 64.001)"></path>
+                    <path fill="#444b54" d="M64,122c-14.9,0-29.7-5.7-41-17C0.4,82.4,0.4,45.6,23,23c22.6-22.6,59.4-22.6,82,0c0,0,0,0,0,0 c22.6,22.6,22.6,59.4,0,82C93.7,116.3,78.9,122,64,122z M64,12c-13.3,0-26.6,5.1-36.8,15.2C7,47.5,7,80.5,27.2,100.8 c20.3,20.3,53.3,20.3,73.5,0c20.3-20.3,20.3-53.3,0-73.5C90.6,17.1,77.3,12,64,12z"></path>
+                    <path fill="#71c2ff" d="M83,61H67V45c0-1.7-1.3-3-3-3s-3,1.3-3,3v16H45c-1.7,0-3,1.3-3,3s1.3,3,3,3h16v16c0,1.7,1.3,3,3,3s3-1.3,3-3 V67h16c1.7,0,3-1.3,3-3S84.7,61,83,61z"></path>
+                  </svg>  
               </button>
+
               <input
                 type="number"
                 value={qty}
                 className="m-3 w-20 rounded-sm p-3"
+                onChange={handleQtyChange}
               ></input>
-              <button
-                className={`h-7 w-7 rounded-full border-2 border-blue-500 bg-white text-blue-500 ${
+
+              <button className={`h-7 w-7 rounded-full border-2 border-blue-500 bg-white text-blue-500 ${
                   qty && qty === 1
                     ? "disabled cursor-not-allowed bg-gray-300"
                     : ""
                 } hover:bg-blue-500 hover:text-white`}
-                onClick={increment}
-              >
-                +
-              </button>
+                onClick={increment}>
+                  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="50" height="50" viewBox="0 0 265 265">
+                    <path fill="#fff" d="M64 9A55 55 0 1 0 64 119A55 55 0 1 0 64 9Z" transform="rotate(-45.001 64 64.001)"></path><path fill="#444b54" d="M64,122c-14.9,0-29.7-5.7-41-17C0.4,82.4,0.4,45.6,23,23c22.6-22.6,59.4-22.6,82,0c0,0,0,0,0,0 c22.6,22.6,22.6,59.4,0,82C93.7,116.3,78.9,122,64,122z M64,12c-13.3,0-26.6,5.1-36.8,15.2C7,47.5,7,80.5,27.2,100.8 c20.3,20.3,53.3,20.3,73.5,0c20.3-20.3,20.3-53.3,0-73.5C90.6,17.1,77.3,12,64,12z"></path><path fill="#71c2ff" d="M83,61H67V45c0-1.7-1.3-3-3-3s-3,1.3-3,3v16H45c-1.7,0-3,1.3-3,3s1.3,3,3,3h16v16c0,1.7,1.3,3,3,3s3-1.3,3-3 V67h16c1.7,0,3-1.3,3-3S84.7,61,83,61z"></path>
+                  </svg>
+                </button>
             </div>
+            
           </div>
+    
         </div>
+        </div>
+        <div className="mt-20 grid md:w-1/2 sm:w-full items-center justify-items-center rounded-xl bg-white/10 p-5">
+            <h3 className="mb-4 text-3xl font-extrabold tracking-tight text-white ">
+              Details
+            </h3>
+            {renderForms()}
+          </div>
         <button className="mt-5 relative rounded-lg bg-blue-400 p-5 text-white hover:bg-blue-600">
           Proceed →
         </button>
