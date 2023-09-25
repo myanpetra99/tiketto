@@ -12,7 +12,54 @@ export default function Checkout() {
   const [showPicker, setShowPicker] = useState(false);
   const [qty, setQty] = useState<number>(1);
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [showModal, setShowModal] = useState(false);
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const tickets = [
+    {
+      id: 1,
+      name: "Cat 1",
+      price: 100000,
+      qty: 100,
+      color: "yellow",
+      outOfStock: false,
+    },
+    {
+      id: 2,
+      name: "Cat 2",
+      price: 80000,
+      qty: 100,
+      color: "green",
+      outOfStock: false,
+    },
+    {
+      id: 3,
+      name: "Cat 3",
+      price: 60000,
+      qty: 100,
+      color: "blue",
+      outOfStock: true,
+    },
+    {
+      id: 4,
+      name: "Cat 4",
+      price: 40000,
+      qty: 100,
+      color: "red",
+      outOfStock: false,
+    },
+    {
+      id: 5,
+      name: "Cat 5",
+      price: 20000,
+      qty: 100,
+      color: "purple",
+      outOfStock: false,
+    },
+  ];
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
 
   const increment = () => {
     setQty((prevQty) => prevQty + 1);
@@ -274,12 +321,13 @@ export default function Checkout() {
               <h3 className="mb-5 text-xl font-extrabold  tracking-tight text-white md:text-3xl">
                 Ticket Type
               </h3>
-              <Link href="/home/events/live/1">
-                <button className="relative rounded-lg bg-yellow-500 px-8 py-4 text-xl font-bold text-white transition duration-150 ease-in-out hover:bg-yellow-600 focus:outline-none ">
-                  <div className="border-b-2 border-dashed "></div>
-                  Cat 1<div className="border-b-2 border-dashed"></div>
-                </button>
-              </Link>
+              <button
+                className="relative rounded-lg bg-yellow-500 px-8 py-4 text-xl font-bold text-white transition duration-150 ease-in-out hover:bg-yellow-600 focus:outline-none "
+                onClick={toggleModal}
+              >
+                <div className="border-b-2 border-dashed "></div>
+                Cat 1<div className="border-b-2 border-dashed"></div>
+              </button>
             </div>
             <div className="mt-5  flex w-full flex-col items-center justify-center justify-items-center text-lg text-black">
               <h3 className=" text-xl font-extrabold  tracking-tight text-white md:text-3xl ">
@@ -374,6 +422,60 @@ export default function Checkout() {
         <button className="relative mt-5 rounded-lg bg-blue-400 p-5 text-white hover:bg-blue-600">
           Proceed →
         </button>
+        <div
+          className="relative z-10"
+          aria-labelledby="modal-title"
+          role="dialog"
+          aria-modal="true"
+          hidden={showModal}
+          onClick={toggleModal}
+        >
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+              <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                  <div className="sm:flex sm:items-start">
+                    <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                      <h3
+                        className="text-base font-semibold leading-6 text-gray-900"
+                        id="modal-title"
+                      >
+                        Select Ticket
+                      </h3>
+                      <div className="mt-2">
+    {tickets.map((ticket) => (
+        <Link href="/home/events/live/1" key={ticket.id}>
+            <button
+                className={`relative rounded-lg bg-${ticket.color}-500 m-3 px-8 py-4 text-xl font-bold text-white transition duration-150 ease-in-out hover:bg-yellow-600 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-gray-300 position-relative`}
+                disabled={ticket.outOfStock}
+            >
+                <div className="border-b-2 border-dashed"></div>
+                {ticket.outOfStock && <span className="z-10 text-sm absolute transform -translate-x-1/2 text-red-500 font-bold rotate-[-17deg] bg-white border-2 border-red-500">Out Of Stock</span>}
+                <p className="z-0">{ticket.name}</p>
+                <div className="border-b-2 border-dashed"></div>
+            </button>
+        </Link>
+    ))}
+</div>
+
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                  <button
+                    type="button"
+                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                    onClick={toggleModal}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
     </>
   );
