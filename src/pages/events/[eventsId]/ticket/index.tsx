@@ -3,6 +3,48 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function Events() {
+  const tickets = [
+    {
+      id: 1,
+      name: "Cat 1",
+      price: 100000,
+      qty: 100,
+      color: "yellow",
+      outOfStock: false,
+    },
+    {
+      id: 2,
+      name: "Cat 2",
+      price: 80000,
+      qty: 100,
+      color: "green",
+      outOfStock: false,
+    },
+    {
+      id: 3,
+      name: "Cat 3",
+      price: 60000,
+      qty: 100,
+      color: "blue",
+      outOfStock: true,
+    },
+    {
+      id: 4,
+      name: "Cat 4",
+      price: 40000,
+      qty: 100,
+      color: "red",
+      outOfStock: false,
+    },
+    {
+      id: 5,
+      name: "Cat 5",
+      price: 20000,
+      qty: 100,
+      color: "purple",
+      outOfStock: false,
+    },
+  ];
   return (
     <>
       <Head>
@@ -25,64 +67,21 @@ export default function Events() {
           <h1 className="text-2xl font-extrabold tracking-tight text-white sm:text-[3rem]">
             Select Your Category
           </h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2">
-            <Link href="/home/events/live/1/checkout" className="m-3">
-              <button className="w- relative rounded-lg bg-blue-800  px-8 py-4 text-xl font-bold text-white transition duration-150 ease-in-out hover:opacity-80 focus:outline-none">
-                <div className=" border-b border-b-2 border-dashed ">
-                  Cat 1
-                  <div className="absolute -left-2 -mt-14 h-5 w-5 rounded-full bg-black "></div>
-                  <div className="absolute -right-2 -mt-14 h-5 w-5 rounded-full bg-black"></div>
-                </div>
-                Rp. 1.000.000
-                <div className="border-b border-b-2 border-dashed">
-                  <div className="absolute -left-2 mt-7 h-5 w-5 rounded-full bg-black"></div>
-                  <div className="absolute -right-2 mt-7 h-5 w-5 rounded-full bg-black"></div>
-                </div>
-                <div className="mini-ticket-description text-sm">
-                  {" "}
-                  Cannot be refunded, Seat Automatically Choosen, 2 Days Pass
-                </div>
-              </button>
-            </Link>
-            <Link href="/events/1/ticket/checkout/1" className="m-3">
-              <button className="w- relative w-full rounded-lg bg-orange-500 px-8 py-4 text-xl font-bold text-white transition duration-150 ease-in-out hover:opacity-90 hover:text-white focus:outline-none">
-                <div className=" border-b border-b-2 border-dashed">
-                  Cat 2
-                  <div className="absolute -left-2 -mt-14 h-5 w-5 rounded-full bg-black "></div>
-                  <div className="absolute -right-2 -mt-14 h-5 w-5 rounded-full bg-black"></div>
-                </div>
-                Rp. 1.000.000
-                <div className="border-b border-b-2 border-dashed">
-                  <div className="absolute -left-2 mt-7 h-5 w-5 rounded-full bg-black"></div>
-                  <div className="absolute -right-2 mt-7 h-5 w-5 rounded-full bg-black"></div>
-                </div>
-                <div className="mini-ticket-description text-sm">
-                  {" "}
-                  Cannot be refunded,{" "}
-                </div>
-              </button>
-            </Link>
-            <Link href="#" className="m-3">
-              <button disabled className="w- relative w-full rounded-lg bg-white px-8 py-4 text-xl font-bold text-black transition duration-150 ease-in-out hover:bg-gray-600 hover:text-white focus:outline-none disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed">
-               
-                <div className=" border-b border-b-2 border-dashed ">
-                  
-                  Cat 3
-                  <div className="absolute -left-2 -mt-14 h-5 w-5 rounded-full bg-black "></div>
-                  <div className="absolute -right-2 -mt-14 h-5 w-5 rounded-full bg-black"></div>
-                  <h1 className="text-red-500 ">Sold out</h1>
-                </div>
-                Rp. 1.000.000
-                <div className="border-b border-b-2 border-dashed">
-                  <div className="absolute -left-2 mt-7 h-5 w-5 rounded-full bg-black"></div>
-                  <div className="absolute -right-2 mt-7 h-5 w-5 rounded-full bg-black"></div>
-                </div>
-                <div className="mini-ticket-description  text-sm">
-                  {" "}
-                  Cannot be refunded,{" "}
-                </div>
-              </button>
-            </Link>
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
+          {tickets.map((ticket) => (
+        <Link href="/home/events/live/1" key={ticket.id}>
+            <button
+                className={`relative rounded-lg bg-${ticket.color}-500 m-3 px-8 py-4 text-xl font-bold text-white transition duration-150 ease-in-out hover:bg-yellow-600 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-gray-300 position-relative`}
+                disabled={ticket.outOfStock}
+            >
+                <div className="border-b-2 border-dashed"></div>
+                {ticket.outOfStock && <span className="z-10 text-sm absolute transform -translate-x-1/2 text-red-500 font-bold rotate-[-17deg] bg-white border-2 border-red-500">Out Of Stock</span>}
+                <p className="z-0">{ticket.name}</p>
+                <p className="z-0">Rp. {ticket.price}</p>
+                <div className="border-b-2 border-dashed"></div>
+            </button>
+        </Link>
+    ))}
           
           </div>
         </div>
