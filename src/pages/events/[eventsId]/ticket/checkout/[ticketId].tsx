@@ -12,7 +12,7 @@ export default function Checkout() {
   const [showPicker, setShowPicker] = useState(false);
   const [qty, setQty] = useState<number>(1);
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const tickets = [
     {
@@ -336,7 +336,7 @@ export default function Checkout() {
 
               <div className="mt-4 flex w-full items-center justify-center sm:w-1/2 ">
                 <button
-                  disabled={qty && qty === 1}
+                  disabled={qty === 1}
                   className={`h-7 w-7 rounded-full border-2 border-blue-500 bg-white text-blue-500 ${
                     qty && qty === 1
                       ? "disabled cursor-not-allowed bg-gray-300"
@@ -378,7 +378,7 @@ export default function Checkout() {
                 ></input>
 
                 <button
-                  disabled={qty && qty === 3}
+                  disabled={qty === 3}
                   className={`h-7 w-7 rounded-full border-2 border-blue-500 bg-white text-blue-500 ${
                     qty && qty === 3
                       ? "disabled cursor-not-allowed bg-gray-300"
@@ -445,21 +445,24 @@ export default function Checkout() {
                         Select Ticket
                       </h3>
                       <div className="mt-2">
-    {tickets.map((ticket) => (
-        <Link href="/home/events/live/1" key={ticket.id}>
-            <button
-                className={`relative rounded-lg bg-${ticket.color}-500 m-3 px-8 py-4 text-xl font-bold text-white transition duration-150 ease-in-out hover:bg-yellow-600 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-gray-300 position-relative`}
-                disabled={ticket.outOfStock}
-            >
-                <div className="border-b-2 border-dashed"></div>
-                {ticket.outOfStock && <span className="z-10 text-sm absolute transform -translate-x-1/2 text-red-500 font-bold rotate-[-17deg] bg-white border-2 border-red-500">Out Of Stock</span>}
-                <p className="z-0">{ticket.name}</p>
-                <div className="border-b-2 border-dashed"></div>
-            </button>
-        </Link>
-    ))}
-</div>
-
+                        {tickets.map((ticket) => (
+                          <Link href="/home/events/live/1" key={ticket.id}>
+                            <button
+                              className={`relative rounded-lg bg-${ticket.color}-500 position-relative m-3 px-8 py-4 text-xl font-bold text-white transition duration-150 ease-in-out hover:bg-yellow-600 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-gray-300`}
+                              disabled={ticket.outOfStock}
+                            >
+                              <div className="border-b-2 border-dashed"></div>
+                              {ticket.outOfStock && (
+                                <span className="absolute z-10 -translate-x-1/2 rotate-[-17deg] transform border-2 border-red-500 bg-white text-sm font-bold text-red-500">
+                                  Out Of Stock
+                                </span>
+                              )}
+                              <p className="z-0">{ticket.name}</p>
+                              <div className="border-b-2 border-dashed"></div>
+                            </button>
+                          </Link>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
