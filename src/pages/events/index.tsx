@@ -1,7 +1,12 @@
 import Head from "next/head";
 import Link from "next/link";
+import { dummyEvents } from "~/events";
 
-export default function Home() {
+export default function Events() {
+ 
+
+const ongoingEvent = dummyEvents[0]
+
   return (
     <>
       <Head>
@@ -14,77 +19,44 @@ export default function Home() {
           <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-[4rem]">
             On Going
           </h1>
-          <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-              href="/events/1"
-              target="_blank"
-            >
-              <h3 className="text-2xl font-bold">Coldplay Ticket</h3>
-              <div className="text-lg">
-                Join The War and get your ticket right now!
-              </div>
-            </Link>
-
+          {ongoingEvent && (<Link
+            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
+            href={`/events/${ongoingEvent.id}`}
+            target="_blank"
+          >
+            <h3 className="text-2xl font-bold">{ongoingEvent.title}</h3>
+            <div className="text-lg">{ongoingEvent.description}</div>
+          </Link>)}
+          
         </div>
-          <div className="flex w-screen items-center justify-center">
-    <div className="w-1/2 flex items-center justify-end">
-    <input className="w-full h-10 rounded-full p-5" placeholder="Coldplay Ticket..."></input>
-    <button className="absolute p-3 text-indigo">Search</button>
-    </div>
-</div>
+        <div className="flex w-screen items-center justify-center">
+          <div className="flex w-1/2 items-center justify-end">
+            <input
+              className="h-10 w-full rounded-full p-5"
+              placeholder="Coldplay Ticket..."
+            ></input>
+            <button className="text-indigo absolute p-3">Search</button>
+          </div>
+        </div>
 
-<div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-<h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-[4rem]">
+        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
+          <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-[4rem]">
             Upcoming
           </h1>
-<div className="grid grid-cols-1 gap-4 sm:grid-cols-4 md:gap-8 mt-5">
-    
-            <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-              href="/register"
-              target="_blank"
-            >
-              <h3 className="text-2xl font-bold">Fuji Kaze</h3>
-              <div className="text-lg">
-                Japanese Singer and Songwriter Fuji Kaze is coming to Indonesia!
-              </div>
-            </Link>
-            <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-              href="/register"
-              target="_blank"
-            >
-              <h3 className="text-2xl font-bold">Alan Walker</h3>
-              <div className="text-lg">
-                Alan Walker is coming to Indonesia!
-              </div>
-            </Link>
-            <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-              href="/register"
-              target="_blank"
-            >
-              <h3 className="text-2xl font-bold">Billie Elish</h3>
-              <div className="text-lg">
-                Billie Elish is coming to Indonesia!
-              </div>
-              </Link>
+          <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-4 md:gap-8">
+            {dummyEvents.slice(1).map(event => (
               <Link
+                key={event.id}
                 className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-              href="/register"
-              target="_blank"
-            >
-              <h3 className="text-2xl font-bold">Elvis Presley</h3>
-              <div className="text-lg">
-                Elvis Presley is coming to Indonesia!
-              </div>
-            </Link>
+                href={`/events/${event.id}`}
+                target="_blank"
+              >
+                <h3 className="text-2xl font-bold">{event.title}</h3>
+                <div className="text-lg">{event.description}</div>
+              </Link>
+            ))}
           </div>
-
         </div>
-
-
-
       </main>
     </>
   );

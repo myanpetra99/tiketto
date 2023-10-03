@@ -1,7 +1,62 @@
 import Head from "next/head";
 import Link from "next/link";
+import { dummyEvents } from "~/events";
+import { useState, useEffect } from "react";
+import Image from "next/image";
 
 export default function Home() {
+  interface TicketType {
+    type: string;
+    price: number;
+    availableSeats: number;
+  }
+
+  interface ConcertEvent {
+    id: number;
+    title: string;
+    description: string;
+    carouselImages: string[];
+    ticketTypes: TicketType[];
+    date: string;
+    time: string;
+    location: string;
+    category: string;
+    quota: number;
+    status: string;
+    created_at: string;
+    updated_at: string;
+  }
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState<ConcertEvent[]>([]);
+  const [debouncedTerm, setDebouncedTerm] = useState(searchTerm);
+  
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
+  useEffect(() => {
+    // Set a timeout to delay search by 1 seconds
+    const timerId = setTimeout(() => {
+      setDebouncedTerm(searchTerm);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [searchTerm]);
+
+  useEffect(() => {
+    if (debouncedTerm) {
+      const results = dummyEvents.filter((event) =>
+        event.title.toLowerCase().includes(debouncedTerm.toLowerCase()),
+      );
+      setSearchResults(results);
+    }else{
+      setSearchResults([]);
+    }
+  }, [debouncedTerm,  dummyEvents]);
+
   return (
     <>
       <Head>
@@ -12,14 +67,48 @@ export default function Home() {
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-[4rem]">
-            Looking for  <span className="text-[hsl(280,100%,70%)]">Ticketing War</span> Platform?
+            Looking for{" "}
+            <span className="text-[hsl(280,100%,70%)]">Ticketing War</span>{" "}
+            Platform?
           </h1>
-          <div className="flex w-screen items-center justify-center">
-    <div className="w-1/2 flex items-center justify-end">
-    <input className="w-full h-10 rounded-full p-5" placeholder="Coldplay Ticket..."></input>
-    <button className="absolute p-3 text-indigo">Search</button>
-    </div>
-</div>
+          <div className="flex w-full flex-col items-center justify-center">
+            <div className="flex w-full items-center justify-center">
+              <div className="flex w-full md:w-1/2  items-center justify-end">
+                <input
+                  className="h-10 w-full rounded-full p-5"
+                  placeholder="Coldplay Ticket..."
+                  value={searchTerm}
+                  onChange={handleInputChange}
+                />
+
+                <button className="text-indigo absolute p-3">Search</button>
+              </div>
+            </div>
+            {searchResults.length > 0 && (
+            <div className="rounded-xl bg-white mt-4  w-full md:w-1/2 p-3 ">
+                <div className="overflow-auto max-h-80">
+                {searchResults.map((event) => (
+                  <div key={event.id} className="my-2 flex gap-4 hover:bg-slate-100 p-4 hover:cursor-pointer">
+                    <Image
+                      alt="event image"
+                      src={event.carouselImages[0]}
+                      width={100}
+                      height={100}
+                      style={{ borderRadius: "1rem" }}
+                    />
+                    <div>
+                      <h4 className="font-bold">{event.title}</h4>
+                      <p>{event.description}</p>
+                      <p>Date: {event.date}</p>
+                      <p>Location: {event.location}</p>
+
+                    </div>
+                  </div>
+                ))}
+              </div>
+              </div>
+            )}
+          </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
             <Link

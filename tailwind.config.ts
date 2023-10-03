@@ -6,6 +6,14 @@ const shades = [
   '100', '200', '300', '400', '500', '600', '700', '800', '900'
 ];
 
+const hoverBgClasses:string[] = [];
+colors.forEach(color => {
+  shades.forEach(shade => {
+    hoverBgClasses.push(`hover:bg-${color}-${shade}`);
+  });
+});
+
+
 const bgClasses:string[] = [];
 
 colors.forEach(color => {
@@ -30,7 +38,7 @@ export default {
   purge: {
     content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
     options: {
-      safelist: bgClasses, // Your generated array
+      safelist: [...bgClasses, ...hoverBgClasses], // Your generated array
     },
   },
 } satisfies Config;

@@ -6,6 +6,7 @@ export default function Checkout() {
   const [minutes, setMinutes] = useState(10);
   const [seconds, setSeconds] = useState(0);
   const [date, setDate] = useState(new Date());
+  
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -46,9 +47,9 @@ export default function Checkout() {
             please complete your payment before :  <span className="text-orange-500 text-lg font-bold">{date.toDateString()} {date.toLocaleTimeString()}</span>
           </div>
         </div>
-        <div className="w-1/2 flex-col items-center justify-items-center rounded-xl bg-white/10  p-5 align-middle">
+        <div className="w-full md:w-1/2 flex-col items-center justify-items-center rounded-xl bg-white/10  p-5 align-middle">
           <div className="flex items-center justify-between bg-white px-5">
-            <h3 className="mb-4 text-sm font-extrabold tracking-tight text-black ">
+            <h3 className="mb-4 text-sm font-extrabold tracking-tight text-black">
               BCA Virtual Account
             </h3>
             <Image
@@ -104,8 +105,8 @@ export default function Checkout() {
           </div>
         </div>
 
-        <div className="grid w-full grid-cols-3 gap-4 my-5">
-          <div className="tems-center grid justify-items-center rounded-xl bg-white/10 p-5">
+        <div className="grid w-full grid-cols-1 md:grid-cols-3 gap-0 md:gap-4 my-5">
+          <div className="items-center grid justify-items-center rounded-xl bg-white/10 p-5">
             <h3 className="mb-4 text-xl font-extrabold tracking-tight text-white md:text-3xl">
               How To Pay
             </h3>
@@ -128,7 +129,7 @@ export default function Checkout() {
               </ol>
             </div>
           </div>
-          <div className="tems-center col-span-2  grid justify-items-center rounded-xl bg-white/10 p-5 ">
+          <div className="tems-center col-span-2  grid justify-items-center rounded-xl bg-white/10 p-5 md:my-0 my-5">
             <h3 className="mb-4 text-xl font-extrabold  tracking-tight text-white md:text-3xl ">
               Purchase Details
             </h3>
